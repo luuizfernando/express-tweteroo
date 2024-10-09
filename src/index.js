@@ -4,40 +4,44 @@ import cors from 'cors';
 const app = express();
 
 app.use(cors());
-app.use(json());
+app.use(express.json());
 
 const PORT = 5000;
 
-const users = [];
 const tweets = [];
+const users = [];
 
 app.post("/sign-up", (req, res) => {
     const { username, avatar } = req.body;
 
     if (!username || !avatar) return res.status(422).send("Todos os campos são obrigatórios!!");
 
-    const novoUsuario = { username: username, avatar: avatar };
+    const novoUsuario = ({ username, avatar });
 
     users.push(novoUsuario);
     res.status(201).send("OK");
 });
 
 app.post("/tweets", (req, res) => {
-
-    if (users.length == 0) return res.send("UNAUTHORIZED");
-
     const { username, tweet } = req.body;
 
-    if (!username || !tweet) return res.status(422).send("Todos os campos são obrigatórios!!");
+    const userExists = users.find((user) => user.username === username);
 
-    const novoTweet = { username: username, tweet: tweet };
+    if (!userExists) return res.send("UNAUTHORIZED");
+
+    const novoTweet = ({ username, tweet });
 
     tweets.push(novoTweet);
     res.status(201).send("OK");
 });
 
 app.get("/tweets", (req, res) => {
-    res.send(tweets);
+    const completeTweets = tweets.map((tweet) => {
+        const user = users.find((u) => u.username === tweet.username)
+        return {...tweet, avatar: user.avatar}
+    });
+
+    res.send(completeTweets.slice(-10));
 });
 
 app.listen(PORT, () => console.log(`Servidor rodando na porta ${PORT}.`));
