@@ -29,7 +29,7 @@ app.post("/tweets", (req, res) => {
 
     const userExists = users.find((user) => user.username === username);
 
-    if (!userExists) return res.send("UNAUTHORIZED");
+    if (!userExists) return res.status(401).send("UNAUTHORIZED");
 
     const novoTweet = ({ username, tweet });
 
