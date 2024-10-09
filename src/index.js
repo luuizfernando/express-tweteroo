@@ -23,15 +23,16 @@ app.post("/sign-up", (req, res) => {
 });
 
 app.post("/tweets", (req, res) => {
-    const { username, tweet } = req.body;
+    const { tweet } = req.body;
+    const { user } = req.headers;
 
-    if (!username || !tweet || typeof username !== "string" || typeof tweet !== "string") return res.status(400).send("Todos os campos são obrigatórios!");
+    if (!user || !tweet || typeof user !== "string" || typeof tweet !== "string") return res.status(400).send("Todos os campos são obrigatórios!");
 
-    const userExists = users.find((user) => user.username === username);
+    const userExists = users.find((u) => u.username === user);
 
     if (!userExists) return res.status(401).send("UNAUTHORIZED");
 
-    const novoTweet = ({ username, tweet });
+    const novoTweet = ({ username: user, tweet });
 
     tweets.push(novoTweet);
     res.status(201).send("OK");
