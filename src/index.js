@@ -40,10 +40,23 @@ app.post("/tweets", (req, res) => {
 app.get("/tweets", (req, res) => {
     const completeTweets = tweets.map((tweet) => {
         const user = users.find((u) => u.username === tweet.username)
-        return {...tweet, avatar: user.avatar}
+        return { ...tweet, avatar: user.avatar }
     });
 
     res.send(completeTweets.slice(-10));
+});
+
+app.get("/tweets/:username", (req, res) => {
+    const { username } = req.params;
+
+    const filteredTweets = tweets.filter((tweet) => {
+        if (tweet.username === username) {
+            const user = users.find((u) => u.username === tweet.username)
+            return { ...tweet, avatar: user.avatar }
+        }
+    });
+
+    res.send(filteredTweets);
 });
 
 app.listen(PORT, () => console.log(`Servidor rodando na porta ${PORT}.`));
