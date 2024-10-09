@@ -19,7 +19,7 @@ app.post("/sign-up", (req, res) => {
     const novoUsuario = { username: username, avatar: avatar };
 
     users.push(novoUsuario);
-    res.sendStatus(201);
+    res.status(201).send("OK");
 });
 
 app.post("/tweets", (req, res) => {
