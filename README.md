@@ -110,3 +110,8 @@ The server will be available at `http://localhost:5000`.
 Desenvolvido por [Luiz Fernando](https://github.com/luuizfernando). Feel free to get in touch and contribute to the project!
 
 ---
+
+## 📫 Contato
+
+- **Email:** [luizfernandosant26@gmail.com](mailto:luizfernandosant26@gmail.com)
+- **LinkedIn:** [linkedin.com/in/luiz-fernando-dalpra](https://linkedin.com/in/luiz-fernando-dalpra)
